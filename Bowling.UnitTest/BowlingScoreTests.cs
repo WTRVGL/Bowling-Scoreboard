@@ -1,7 +1,7 @@
-﻿using Bowling.Domain;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Puntentelling.Services;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using Bowling.Domain.Models;
+using Bowling.Puntentelling.Services;
 
 namespace Bowling.UnitTest
 {

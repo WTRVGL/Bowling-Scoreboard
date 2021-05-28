@@ -17,8 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\Domain.csproj" />
-    <ProjectReference Include="..\Puntentelling\Puntentelling.csproj" />
+    <ProjectReference Include="..\Domain\Bowling.Domain.csproj" />
+    <ProjectReference Include="..\Puntentelling\Bowling.Puntentelling.csproj" />
   </ItemGroup>
 
   <ItemGroup>

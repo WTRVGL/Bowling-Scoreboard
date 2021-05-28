@@ -1,37 +1,30 @@
-﻿<Application x:Class="BowlingGUI.App"
+﻿<Application x:Class="Bowling.GUI.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:BowlingGUI"
              Startup="OnStartup">
     <Application.Resources>
-        
+
         <!--Balloons Font-->
         <FontFamily x:Key="BalloonsFont">pack://application:,,,/Fonts/#balloons</FontFamily>
-        
+
         <!--Grey Color-->
         <Color x:Key="GreyColor">#67595E</Color>
         <!--Light Grey Color-->
         <Color x:Key="LightGreyColor">#A49393</Color>
         <!--Light Color-->
         <Color x:Key="LightColor">#EED6D3</Color>
-
         <!--Rose Color-->
         <Color x:Key="RoseColor">#E8B4B8</Color>
 
-        
+
         <!--Grey SolidBrush-->
-        <SolidColorBrush x:Key="GreyColorSolidBrush" Color="{StaticResource GreyColor}"></SolidColorBrush>
-        
+        <SolidColorBrush x:Key="GreyColorSolidBrush" Color="{StaticResource GreyColor}" />
         <!--Light Grey SolidBrush-->
-        <SolidColorBrush x:Key="LightGreyColorSolidBrush" Color="{StaticResource LightGreyColor}"></SolidColorBrush>
-
+        <SolidColorBrush x:Key="LightGreyColorSolidBrush" Color="{StaticResource LightGreyColor}" />
         <!--Light SolidBrush-->
-        <SolidColorBrush x:Key="LightColorSolidBrush" Color="{StaticResource LightColor}"></SolidColorBrush>
-
+        <SolidColorBrush x:Key="LightColorSolidBrush" Color="{StaticResource LightColor}" />
         <!--Rose SolidBrush-->
-        <SolidColorBrush x:Key="RoseColorSolidBrush" Color="{StaticResource RoseColor}"></SolidColorBrush>
-
-        
+        <SolidColorBrush x:Key="RoseColorSolidBrush" Color="{StaticResource RoseColor}" />
 
 
     </Application.Resources>

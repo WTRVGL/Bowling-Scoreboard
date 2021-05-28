@@ -1,9 +1,8 @@
-﻿using BowlingGUI.ViewModels;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
+using Bowling.GUI.ViewModels;
 
-namespace BowlingGUI.UserControls
+namespace Bowling.GUI.UserControls
 {
     /// <summary>
     /// Interaction logic for Frame.xaml
@@ -24,15 +23,6 @@ namespace BowlingGUI.UserControls
         private void Frame_Loaded(object sender, RoutedEventArgs e)
         {
             FirstValue.Focus();
-        }
-
-        private void Button_Handle_Focus(object sender, RoutedEventArgs e)
-        {
-            var x = this;
-            
-            var ctx = (FrameViewModel)x.DataContext;
-
-           
         }
     }
 }

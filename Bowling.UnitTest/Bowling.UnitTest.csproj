@@ -56,13 +56,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Domain\Domain.csproj">
+    <ProjectReference Include="..\Domain\Bowling.Domain.csproj">
       <Project>{3ff5f32a-30ea-4a67-aa77-14336b8556e5}</Project>
-      <Name>Domain</Name>
+      <Name>Bowling.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Puntentelling\Puntentelling.csproj">
+    <ProjectReference Include="..\Puntentelling\Bowling.Puntentelling.csproj">
       <Project>{0f203b40-49ac-42a1-9a0f-879fdd8e64ed}</Project>
-      <Name>Puntentelling</Name>
+      <Name>Bowling.Puntentelling</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

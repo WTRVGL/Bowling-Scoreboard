@@ -1,9 +1,8 @@
-﻿<UserControl x:Class="BowlingGUI.UserControls.Frame"
+﻿<UserControl x:Class="Bowling.GUI.UserControls.Frame"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:BowlingGUI.UserControls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              Background="{StaticResource LightGreyColorSolidBrush}"
              MinHeight="200"
@@ -14,107 +13,105 @@
     <UserControl.Resources>
 
         <Style TargetType="Border" x:Key="TextBoxBorder">
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="BorderThickness" Value="2"/>
-            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="BorderBrush" Value="Black" />
             <Setter Property="Background">
                 <Setter.Value>
-                    <SolidColorBrush Color="Transparent"/>
+                    <SolidColorBrush Color="Transparent" />
                 </Setter.Value>
             </Setter>
         </Style>
 
         <Style TargetType="TextBox" x:Key="TextBoxStyle">
 
-            <Setter Property="Foreground" Value="{StaticResource LightColorSolidBrush}"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="FontSize" Value="25"/>
-            <Setter Property="TextAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="0"/>
-            <Setter Property="FontFamily" Value="{StaticResource BalloonsFont}"/>
-            <Setter Property="Width" Value="20"/>
+            <Setter Property="MaxLength" Value="2" />
+            <Setter Property="Foreground" Value="{StaticResource LightColorSolidBrush}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="FontSize" Value="25" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="FontFamily" Value="{StaticResource BalloonsFont}" />
+            <Setter Property="Width" Value="50" />
             <Style.Triggers>
                 <DataTrigger Binding="{Binding FramePlayed}" Value="true">
-                    
-                    <Setter Property="Focusable" Value="False"/>
+
+                    <Setter Property="Focusable" Value="False" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding IsActive}" Value="False">
-                    <Setter Property="IsEnabled" Value="False"/>
+                    <Setter Property="IsEnabled" Value="False" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding IsActive}" Value="True">
-                    <Setter Property="IsEnabled" Value="True"/>
+                    <Setter Property="IsEnabled" Value="True" />
 
                 </DataTrigger>
-                
-                
+
+
             </Style.Triggers>
-            
+
         </Style>
         <Style TargetType="Grid">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding IsActive}" Value="false">
-                    <Setter Property="IsEnabled" Value="False"/>
-                    <Setter Property="Background" Value="Gray"/>
-                    <Setter Property="Opacity" Value="0.2"/>
+                    <Setter Property="IsEnabled" Value="False" />
+                    <Setter Property="Background" Value="Gray" />
+                    <Setter Property="Opacity" Value="0.2" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-        
+
     </UserControl.Resources>
-    
+
     <!--#region Frame-->
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="0.5*" />
         </Grid.RowDefinitions>
-        
+
         <!--Main Grid Border-->
         <Border
-            
+            BorderBrush="Black"
+            BorderThickness="2"
             Grid.Row="0"
-                Grid.RowSpan="3"
-                Grid.Column="0"
-                Grid.ColumnSpan="3">
+            Grid.RowSpan="3"
+            Grid.Column="0"
+            Grid.ColumnSpan="3">
         </Border>
 
         <!--Frame Number-->
-        <Border
-            Grid.ColumnSpan="2"
-            Margin="25 5 25 0"
-            >
-            <TextBlock
-                Name="FirstScoreTextBlock"
-                Text="{Binding FrameNumber}"
-                FontSize="50"
-                FontFamily="{StaticResource BalloonsFont}"
-                Foreground="Black"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                >
-            </TextBlock>
-        </Border>
+        <TextBlock
+            Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0"
+            Name="FirstScoreTextBlock"
+            Text="{Binding FrameNumber}"
+            FontSize="40"
+            FontFamily="{StaticResource BalloonsFont}"
+            Foreground="Black"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+        </TextBlock>
+
 
         <!--#region Frame Input-->
         <!--Main Grid-->
-        
-        <Grid 
+
+        <Grid
             Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                      Grid.Row="1"
-                      Margin="0 20 0 0">
+            Grid.ColumnSpan="2"
+            Grid.Row="1"
+            Margin="0 20 0 0">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
                 <!--Optional Score Column Definition-->
                 <ColumnDefinition
                     x:Name="ThirdColumn">
@@ -122,20 +119,20 @@
                         <Style TargetType="ColumnDefinition">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding IsFinalFrame}" Value="false">
-                                    <Setter Property="Width" Value="0"/>
-                                    <Setter Property="Focusable" Value="False"/>
+                                    <Setter Property="Width" Value="0" />
+                                    <Setter Property="Focusable" Value="False" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </ColumnDefinition.Style>
                 </ColumnDefinition>
             </Grid.ColumnDefinitions>
-            
+
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            
+
             <!--First Score Input Textbox-->
             <Border
                 Style="{StaticResource TextBoxBorder}"
@@ -145,21 +142,22 @@
                     d:Text="1"
                     Style="{StaticResource TextBoxStyle}"
                     x:Name="FirstValue"
-                    Text="{Binding FirstScore, Mode=TwoWay}"/>
+                    Text="{Binding FirstScore, Mode=TwoWay}" />
             </Border>
-            
+
             <!--Second Score Input Textbox-->
             <Border
                 Style="{StaticResource TextBoxBorder}"
                 Grid.Row="0"
                 Grid.Column="1">
                 <TextBox
+                    d:Text="1"
                     Style="{StaticResource TextBoxStyle}"
-                    Text="{Binding SecondScore}"/>
+                    Text="{Binding SecondScore}" />
             </Border>
-            
+
             <!--Third Score Input Textbox-->
-            <Border 
+            <Border
                 Style="{StaticResource TextBoxBorder}"
                 Grid.Row="0"
                 Grid.Column="2">
@@ -170,20 +168,20 @@
                         <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxStyle}">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding IsFinalFrame}" Value="false">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Setter Property="Visibility" Value="Collapsed" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </TextBox.Style>
                 </TextBox>
             </Border>
-            
-            
+
+
             <!--Add Frame Button-->
-                <!--Command bound to "AddFrame" ICommand
+            <!--Command bound to "AddFrame" ICommand
                     of MainWindowViewModel DataContext.      
                 -->
-            <Button 
+            <Button
                 FontFamily="{StaticResource BalloonsFont}"
                 x:Name="Submit"
                 Grid.Column="0"
@@ -194,36 +192,22 @@
                 Content="Roll!"
                 Command="{Binding DataContext.AddFrame, RelativeSource={RelativeSource AncestorType=Window}}"
                 CommandParameter="{Binding}">
-                
-            <Button.Style>
+
+                <Button.Style>
                     <Style TargetType="Button">
-                        <Setter Property="Background" Value="{StaticResource LightColorSolidBrush}"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type Button}">
-                                    <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                        
+                        <Setter Property="Background" Value="{StaticResource LightColorSolidBrush}" />
                         <Style.Resources>
                             <Style TargetType="Border">
-                                <Setter Property="CornerRadius" Value="5"/>
+                                <Setter Property="CornerRadius" Value="5" />
                             </Style>
                         </Style.Resources>
                         <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="Yellow"/>
-                            </Trigger>
                             <DataTrigger Binding="{Binding FramePlayed}" Value="true">
-                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Setter Property="Visibility" Value="Collapsed" />
                             </DataTrigger>
                             <Trigger Property="IsFocused" Value="True">
-                                <Setter Property="BorderThickness" Value="2"/>
+                                <Setter Property="BorderThickness"  Value="4"/>
                                 <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                                <Setter Property="BorderBrush" Value="Black"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>
@@ -233,19 +217,18 @@
 
         <!--Cumulative Score-->
         <TextBlock
-            d:Text="11"
             Foreground="{StaticResource LightColorSolidBrush}"
             Text="{Binding CumulativeScore}"
             HorizontalAlignment="Center"
             Grid.Row="3"
-            Grid.ColumnSpan="2"
+            Grid.ColumnSpan="2" Grid.Column="0"
             FontSize="25">
             <TextBlock.Style>
                 <Style TargetType="TextBlock">
-                    <Setter Property="Visibility" Value="Visible"/>
+                    <Setter Property="Visibility" Value="Visible" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding FramePlayed}" Value="false" >
-                            <Setter Property="Visibility" Value="Collapsed"/>
+                        <DataTrigger Binding="{Binding FramePlayed}" Value="false">
+                            <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>

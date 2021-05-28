@@ -1,10 +1,7 @@
-﻿using BowlingGUI.ViewModels;
-using Puntentelling;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows;
+using Bowling.GUI.ViewModels;
 
-namespace BowlingGUI
+namespace Bowling.GUI.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -17,7 +14,6 @@ namespace BowlingGUI
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new MainWindowViewModel();
         }
 
     }

@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bowling.GUI", "BowlingGUI\Bowling.GUI.csproj", "{DC9B92D3-7493-4DD5-90BC-A5D25809ACC8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Puntentelling", "Puntentelling\Puntentelling.csproj", "{0F203B40-49AC-42A1-9A0F-879FDD8E64ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bowling.Puntentelling", "Puntentelling\Bowling.Puntentelling.csproj", "{0F203B40-49AC-42A1-9A0F-879FDD8E64ED}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{3FF5F32A-30EA-4A67-AA77-14336B8556E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bowling.Domain", "Domain\Bowling.Domain.csproj", "{3FF5F32A-30EA-4A67-AA77-14336B8556E5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bowling.UnitTest", "Bowling.UnitTest\Bowling.UnitTest.csproj", "{33E320C1-2044-4A8E-B86B-D697AEBB4F10}"
 EndProject
