@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:val="clr-namespace:Bowling.GUI.ValidationRules"
              mc:Ignorable="d"
              Background="{StaticResource LightGreyColorSolidBrush}"
              MinHeight="200"
@@ -11,31 +12,28 @@
              MaxHeight="200">
 
     <UserControl.Resources>
+        <ControlTemplate x:Key="ValidationTemplate">
+            <DockPanel>
+                <TextBlock Foreground="Red" FontSize="20">!</TextBlock>
+                <AdornedElementPlaceholder/>
+            </DockPanel>
+        </ControlTemplate>
 
-        <Style TargetType="Border" x:Key="TextBoxBorder">
-            <Setter Property="Margin" Value="5" />
-            <Setter Property="BorderThickness" Value="2" />
-            <Setter Property="BorderBrush" Value="Black" />
-            <Setter Property="Background">
-                <Setter.Value>
-                    <SolidColorBrush Color="Transparent" />
-                </Setter.Value>
-            </Setter>
-        </Style>
+  
 
         <Style TargetType="TextBox" x:Key="TextBoxStyle">
 
             <Setter Property="MaxLength" Value="2" />
             <Setter Property="Foreground" Value="{StaticResource LightColorSolidBrush}" />
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="BorderThickness" Value="2" />
             <Setter Property="BorderBrush" Value="Black" />
             <Setter Property="FontSize" Value="25" />
+            <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="TextAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center" />
-            <Setter Property="Margin" Value="0" />
-            <Setter Property="FontFamily" Value="{StaticResource BalloonsFont}" />
+            <Setter Property="Margin" Value="4" />
             <Setter Property="Width" Value="50" />
             <Style.Triggers>
                 <DataTrigger Binding="{Binding FramePlayed}" Value="true">
@@ -70,7 +68,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.5*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="0.5*"/>
             <RowDefinition Height="0.5*" />
         </Grid.RowDefinitions>
 
@@ -86,11 +84,12 @@
 
         <!--Frame Number-->
         <TextBlock
+
             Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0"
             Name="FirstScoreTextBlock"
             Text="{Binding FrameNumber}"
             FontSize="40"
-            FontFamily="{StaticResource BalloonsFont}"
+            FontWeight="Bold"
             Foreground="Black"
             HorizontalAlignment="Center"
             VerticalAlignment="Center">
@@ -99,12 +98,12 @@
 
         <!--#region Frame Input-->
         <!--Main Grid-->
-
         <Grid
             Grid.Column="0"
             Grid.ColumnSpan="2"
             Grid.Row="1"
-            Margin="0 20 0 0">
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -136,74 +135,85 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
             <!--First Score Input Textbox-->
-            <Border
-                Style="{StaticResource TextBoxBorder}"
-                Grid.Row="0"
-                Grid.Column="0">
+    
                 <TextBox
+                    Grid.Row="0"
+                    Grid.Column="0"
                     d:Text="1"
                     Style="{StaticResource TextBoxStyle}"
                     x:Name="FirstValue"
-                    Text="{Binding FirstScore, UpdateSourceTrigger=PropertyChanged}" />
-            </Border>
+                    Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+                    <TextBox.Text>
+                        <Binding 
+                            Path="FirstScore"
+                            UpdateSourceTrigger="PropertyChanged">
+
+                            <Binding.ValidationRules>
+                                <val:ScoreRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+ 
 
             <!--Second Score Input Textbox-->
-            <Border
-                Style="{StaticResource TextBoxBorder}"
-                Grid.Row="0"
-                Grid.Column="1">
+            
                 <TextBox
                     d:Text="1"
+                    Grid.Row="0"
+                    Grid.Column="1"
                     Style="{StaticResource TextBoxStyle}"
                     Text="{Binding SecondScore, UpdateSourceTrigger=PropertyChanged}" />
-            </Border>
+            
 
             <!--Third Score Input Textbox-->
-            <Border
-                Style="{StaticResource TextBoxBorder}"
+            
+            <TextBox
                 Grid.Row="0"
-                Grid.Column="2">
-                <TextBox
-                    d:Text="5"
-                    d:Visibility ="Visible"
-                    Text="{Binding ThirdScore}">
-                    <TextBox.Style>
-                        <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxStyle}">
-                            <Setter Property="Visibility" Value="Collapsed"/>
-                            <Setter Property="IsEnabled" Value="False"/>
-                            <Style.Triggers>
-                                <MultiDataTrigger>
-                                    <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding IsFinalFrame}" Value="true"/>
-                                        <Condition Binding="{Binding ExtraRoll}" Value="true"/>
-                                    </MultiDataTrigger.Conditions>
-                                    <Setter Property="Visibility" Value="Visible" />
-                                    <Setter Property="IsEnabled" Value="True"/>
-                                </MultiDataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBox.Style>
-                </TextBox>
-            </Border>
+                Grid.Column="2"
+                d:Text="5"
+                d:Visibility ="Visible"
+                Text="{Binding ThirdScore}">
+                <TextBox.Style>
+                    <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxStyle}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Setter Property="IsEnabled" Value="False"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsFinalFrame}" Value="true"/>
+                                    <Condition Binding="{Binding ExtraRoll}" Value="true"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Visibility" Value="Visible" />
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+            
         
 
-            <!--Add Frame Button-->
-            <!--Command bound to "AddFrame" ICommand
+            
+        </Grid>
+
+        <!--Add Frame Button-->
+        <!--Command bound to "AddFrame" ICommand
                     of MainWindowViewModel DataContext.      
                 -->
+        <Viewbox 
+            Grid.Column="0"
+            Grid.ColumnSpan="2" 
+            Grid.Row="2">
             <Button
                 FontFamily="{StaticResource BalloonsFont}"
                 x:Name="Submit"
-                Grid.Column="0"
-                Grid.ColumnSpan="3"
-                Grid.Row="1"
                 Margin="5"
-                Width="75"
-                Content="Roll!"
+                Content="Roll"
+                FontSize="10"
                 Command="{Binding DataContext.AddFrame, RelativeSource={RelativeSource AncestorType=Window}}"
                 CommandParameter="{Binding}">
 
@@ -216,6 +226,9 @@
                             </Style>
                         </Style.Resources>
                         <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsActive}" Value="false">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
                             <DataTrigger Binding="{Binding FramePlayed}" Value="true">
                                 <Setter Property="Visibility" Value="Collapsed" />
                             </DataTrigger>
@@ -227,16 +240,21 @@
                     </Style>
                 </Button.Style>
             </Button>
-        </Grid>
 
+        </Viewbox>
+        
         <!--Cumulative Score-->
         <TextBlock
+            
             Foreground="{StaticResource LightColorSolidBrush}"
+            d:Text ="1"
             Text="{Binding CumulativeScore}"
             HorizontalAlignment="Center"
-            Grid.Row="3"
+            VerticalAlignment="Center"
+            Grid.Row="2"
             Grid.ColumnSpan="2" Grid.Column="0"
-            FontSize="25">
+            FontSize="25"
+            FontWeight="Bold">
             <TextBlock.Style>
                 <Style TargetType="TextBlock">
                     <Setter Property="Visibility" Value="Visible" />

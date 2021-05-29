@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Windows.Input;
 using Bowling.Domain.Models;
 using Bowling.Puntentelling.Services;
@@ -107,7 +108,7 @@ namespace Bowling.GUI.ViewModels
             {
                 return true;
             }
-
+            
             if (frame.FirstScore + frame.SecondScore <= 10) return true;
             //Extra check last frame, since FirstScore + SecondScore + ThirdScore can be 30.
             if (frame.IsFinalFrame != true) return false;
