@@ -32,22 +32,19 @@
             <Setter Property="BorderBrush" Value="Black" />
             <Setter Property="FontSize" Value="25" />
             <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="Margin" Value="0" />
             <Setter Property="FontFamily" Value="{StaticResource BalloonsFont}" />
             <Setter Property="Width" Value="50" />
             <Style.Triggers>
                 <DataTrigger Binding="{Binding FramePlayed}" Value="true">
-
                     <Setter Property="Focusable" Value="False" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding IsActive}" Value="False">
-                    <Setter Property="IsEnabled" Value="False" />
+                    <Setter Property="Focusable" Value="False" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding IsActive}" Value="True">
-                    <Setter Property="IsEnabled" Value="True" />
-
-                </DataTrigger>
+                
 
 
             </Style.Triggers>
@@ -122,6 +119,15 @@
                                     <Setter Property="Width" Value="0" />
                                     <Setter Property="Focusable" Value="False" />
                                 </DataTrigger>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding IsFinalFrame}" Value="true" />
+                                        <Condition Binding="{Binding ExtraRoll}" Value="false"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Width" Value="0" />
+                                    <Setter Property="Focusable" Value="False" />
+                                </MultiDataTrigger>
+
                             </Style.Triggers>
                         </Style>
                     </ColumnDefinition.Style>
@@ -142,7 +148,7 @@
                     d:Text="1"
                     Style="{StaticResource TextBoxStyle}"
                     x:Name="FirstValue"
-                    Text="{Binding FirstScore, Mode=TwoWay}" />
+                    Text="{Binding FirstScore, UpdateSourceTrigger=PropertyChanged}" />
             </Border>
 
             <!--Second Score Input Textbox-->
@@ -153,7 +159,7 @@
                 <TextBox
                     d:Text="1"
                     Style="{StaticResource TextBoxStyle}"
-                    Text="{Binding SecondScore}" />
+                    Text="{Binding SecondScore, UpdateSourceTrigger=PropertyChanged}" />
             </Border>
 
             <!--Third Score Input Textbox-->
@@ -163,19 +169,27 @@
                 Grid.Column="2">
                 <TextBox
                     d:Text="5"
+                    d:Visibility ="Visible"
                     Text="{Binding ThirdScore}">
                     <TextBox.Style>
                         <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxStyle}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Setter Property="IsEnabled" Value="False"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsFinalFrame}" Value="false">
-                                    <Setter Property="Visibility" Value="Collapsed" />
-                                </DataTrigger>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding IsFinalFrame}" Value="true"/>
+                                        <Condition Binding="{Binding ExtraRoll}" Value="true"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Visibility" Value="Visible" />
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </MultiDataTrigger>
                             </Style.Triggers>
                         </Style>
                     </TextBox.Style>
                 </TextBox>
             </Border>
-
+        
 
             <!--Add Frame Button-->
             <!--Command bound to "AddFrame" ICommand

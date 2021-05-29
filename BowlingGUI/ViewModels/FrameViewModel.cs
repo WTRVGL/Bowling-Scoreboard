@@ -28,6 +28,19 @@ namespace Bowling.GUI.ViewModels
             }
         }
 
+        private bool _ExtraRoll;
+
+        public bool ExtraRoll
+        {
+            get => FirstScore + SecondScore >= 10;
+            set 
+            {
+                _ExtraRoll = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         public int TotalScore => FirstScore + SecondScore + ThirdScore + BonusScore;
 
 
@@ -60,6 +73,7 @@ namespace Bowling.GUI.ViewModels
             {
                 _SecondScore = value;
                 OnPropertyChanged();
+                OnPropertyChanged("ExtraRoll");
             }
         }
 
@@ -71,6 +85,7 @@ namespace Bowling.GUI.ViewModels
             {
                 _FirstScore = value;
                 OnPropertyChanged();
+                OnPropertyChanged("ExtraRoll");
             }
         }
 

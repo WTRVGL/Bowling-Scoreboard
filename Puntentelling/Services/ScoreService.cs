@@ -5,11 +5,8 @@ namespace Bowling.Puntentelling.Services
 {
     public class ScoreService
     {
-        /// <summary>
-        /// Calculates BonusScore for each frame depending on the next 2 frames
-        /// </summary>
-        /// <param name="frames"></param>
-        /// <returns></returns>
+        //Calculates BonusScore for each frame depending on the next 2 frames
+
         public List<Frame> UpdatedFrameScores(List<Frame> frames)
         {
             // Loops trough the entire list
@@ -57,6 +54,8 @@ namespace Bowling.Puntentelling.Services
         public int TotalFrameScore(List<Frame> frames)
         {
             var totalScore = 0;
+            
+
             frames.ForEach(fr => { totalScore += fr.TotalScore; });
 
             return totalScore;

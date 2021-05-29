@@ -4,7 +4,7 @@ namespace Bowling.GUI.ViewModels
 {
     /// <summary>
     ///     Mock Viewmodel to fill ItemControl at Design time
-    /// </summary>
+    /// </summary> 
     public class MockViewModel
     {
         public List<FrameViewModel> DesignTimeMockList =>
