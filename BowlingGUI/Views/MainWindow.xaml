@@ -7,32 +7,17 @@
         xmlns:userControls="clr-namespace:Bowling.GUI.UserControls"
         mc:Ignorable="d"
         Focusable="False"
-        WindowState="Maximized"
-        Title="MainWindow" Height="500" Width="1450"
+        Title="Bowling: a score simulator"
+        ResizeMode="NoResize"
+        Width="1550"
+        Height="400"
+        WindowStartupLocation="CenterScreen"
         Background="{StaticResource GreyColorSolidBrush}">
 
 
     <!--#region Window Styles-->
     <Window.Resources>
-        <Style TargetType="TextBlock" x:Key="BowlingTitle">
-            <Setter Property="FontFamily" Value="{StaticResource BalloonsFont}" />
-            <Setter Property="FontWeight" Value="Medium" />
-            <Setter Property="FontSize" Value="86" />
-            <Setter Property="HorizontalAlignment" Value="Center" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-        </Style>
-
-        <Style TargetType="TextBlock">
-            <Setter Property="HorizontalAlignment" Value="Center" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="FontSize" Value="20" />
-            <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="Margin" Value="0 10 0 10" />
-        </Style>
-
-
         <vm:MockViewModel x:Key="MockViewModel" />
-
     </Window.Resources>
 
     <Window.DataContext>
@@ -42,35 +27,22 @@
     <!--#endregion-->
 
     <!--#region Main Grid-->
-    <Grid>
+    <Grid
+        VerticalAlignment="Center">
 
         <!--#region Main Grid Column Definitions-->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.5*" />
             <RowDefinition Height="auto" />
-            <RowDefinition Height="0.5*" />
         </Grid.RowDefinitions>
         <!--#endregion-->
 
-        <!--#region Bowling Scoreboard Title-->
-
-        <TextBlock
-
-            Grid.ColumnSpan="2" Grid.Column="0"
-            Style="{StaticResource BowlingTitle}"
-            Text="Bowling Scoreboard" />
-
-        <!--#endregion-->
+        
 
         <Border
-            MaxWidth="1500"
-            Grid.Row="1"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
+            VerticalAlignment="Center"
             HorizontalAlignment="Center"
             BorderThickness="5"
             CornerRadius="5"

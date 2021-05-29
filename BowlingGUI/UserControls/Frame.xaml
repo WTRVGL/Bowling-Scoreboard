@@ -24,8 +24,6 @@
         <Style TargetType="TextBox" x:Key="TextBoxStyle">
 
             <Setter Property="MaxLength" Value="2" />
-            <Setter Property="Foreground" Value="{StaticResource LightColorSolidBrush}" />
-            <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="2" />
             <Setter Property="BorderBrush" Value="Black" />
             <Setter Property="FontSize" Value="25" />
@@ -35,8 +33,29 @@
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="Margin" Value="4" />
             <Setter Property="Width" Value="50" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                        <Border 
+                            Name="Border"
+                            CornerRadius="2" 
+                            Padding="2"
+                            Background="Transparent"
+                            BorderBrush="Black"
+                            BorderThickness="3" >
+                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="#666666"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding FramePlayed}" Value="true">
+                    <Setter Property="IsEnabled" Value="False"/>
                     <Setter Property="Focusable" Value="False" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding IsActive}" Value="False">
@@ -190,6 +209,9 @@
                                 <Setter Property="Visibility" Value="Visible" />
                                 <Setter Property="IsEnabled" Value="True"/>
                             </MultiDataTrigger>
+                            <DataTrigger Binding="{Binding FramePlayed}" Value="True">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </TextBox.Style>
