@@ -259,60 +259,64 @@ namespace Bowling.GUI.ViewModels
         {
             get
             {
-                if (columnName == nameof(FirstScore))
+                switch (columnName)
                 {
-                    if (IsFinalFrame)
+                    case nameof(FirstScore):
                     {
-                        if (FirstScore > 10) return "Score is meer dan 10. Kan niet!";
+                        if (IsFinalFrame)
+                        {
+                            if (FirstScore > 10) return "Score is meer dan 10. Kan niet!";
 
-                        if (SecondScore > 10) return "Score is meer dan 10. Kan niet!";
+                            if (SecondScore > 10) return "Score is meer dan 10. Kan niet!";
 
-                        if (ThirdScore > 10) return "Score is meer dan 10. Kan niet!";
+                            if (ThirdScore > 10) return "Score is meer dan 10. Kan niet!";
 
-                        if (FirstScore + SecondScore > 10 && FirstScore + SecondScore <= 20) return null;
+                            if (FirstScore + SecondScore > 10 && FirstScore + SecondScore <= 20) return null;
 
-                        if (FirstScore + SecondScore > 20) return "Meer dan 10 punten per worp is onmogelijk!";
+                            if (FirstScore + SecondScore > 20) return "Meer dan 10 punten per worp is onmogelijk!";
+                        }
+
+                        if (FirstScore + SecondScore > 10) return "Totaal is meer dan 10. Kan niet!";
+                        break;
                     }
+                    case nameof(SecondScore):
+                    {
+                        if (IsFinalFrame)
+                        {
+                            if (FirstScore > 10) return "Score is meer dan 10. Kan niet!";
 
-                    if (FirstScore + SecondScore > 10) return "Totaal is meer dan 10. Kan niet!";
+                            if (SecondScore > 10) return "Score is meer dan 10. Kan niet!";
+
+                            if (ThirdScore > 10) return "Score is meer dan 10. Kan niet!";
+
+                            if (FirstScore + SecondScore > 10 && FirstScore + SecondScore <= 20) return null;
+
+                            if (FirstScore + SecondScore > 20) return "Meer dan 10 punten per worp is onmogelijk!";
+                        }
+
+                        if (FirstScore + SecondScore > 10) return "Totaal is meer dan 10. Kan niet!";
+                        break;
+                    }
+                    case nameof(ThirdScore):
+                    {
+                        if (IsFinalFrame)
+                        {
+                            if (FirstScore > 10) return "Score is meer dan 10. Kan niet!";
+
+                            if (SecondScore > 10) return "Score is meer dan 10. Kan niet!";
+
+                            if (ThirdScore > 10) return "Score is meer dan 10. Kan niet!";
+
+                            if (FirstScore + SecondScore > 10 && FirstScore + SecondScore <= 20) return null;
+
+                            if (FirstScore + SecondScore > 20) return "Meer dan 10 punten per worp is onmogelijk!";
+                        }
+
+                        if (FirstScore + SecondScore > 10) return "Totaal is meer dan 10. Kan niet!";
+                        break;
+                    }
                 }
 
-                if (columnName == nameof(SecondScore))
-                {
-                    if (IsFinalFrame)
-                    {
-                        if (FirstScore > 10) return "Score is meer dan 10. Kan niet!";
-
-                        if (SecondScore > 10) return "Score is meer dan 10. Kan niet!";
-
-                        if (ThirdScore > 10) return "Score is meer dan 10. Kan niet!";
-
-                        if (FirstScore + SecondScore > 10 && FirstScore + SecondScore <= 20) return null;
-
-                        if (FirstScore + SecondScore > 20) return "Meer dan 10 punten per worp is onmogelijk!";
-                    }
-
-                    if (FirstScore + SecondScore > 10) return "Totaal is meer dan 10. Kan niet!";
-                }
-
-
-                if (columnName == nameof(ThirdScore))
-                {
-                    if (IsFinalFrame)
-                    {
-                        if (FirstScore > 10) return "Score is meer dan 10. Kan niet!";
-
-                        if (SecondScore > 10) return "Score is meer dan 10. Kan niet!";
-
-                        if (ThirdScore > 10) return "Score is meer dan 10. Kan niet!";
-
-                        if (FirstScore + SecondScore > 10 && FirstScore + SecondScore <= 20) return null;
-
-                        if (FirstScore + SecondScore > 20) return "Meer dan 10 punten per worp is onmogelijk!";
-                    }
-
-                    if (FirstScore + SecondScore > 10) return "Totaal is meer dan 10. Kan niet!";
-                }
 
                 return null;
             }

@@ -35,7 +35,7 @@ namespace Bowling.GUI
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
+            {
             (sender as TextBox)?.SelectAll();
         }
 

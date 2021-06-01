@@ -1,6 +1,5 @@
 ﻿namespace Bowling.Domain.Models
 {
-
     /// <summary>
     /// Simple Frame class.
     /// <remarks>
@@ -10,24 +9,13 @@
     /// </summary>
     public class Frame
     {
-        public int FirstScore { get; set; }
-        public int TotalScore => FirstScore + SecondScore + ThirdScore + BonusScore;
-        public int SecondScore { get; set; }
-
-        public bool IsSpare => FirstScore + SecondScore == 10 && FirstScore != 10;
-
-        public int ThirdScore { get; set; }
-
-        public int BonusScore { get; set; }
-
-        public bool IsFinalFrame { get; set; }
-
-        public bool IsStrike => FirstScore == 10;
-
         public int FrameNumber { get; set; }
-
-        
-
-       
+        public int FirstScore { get; set; }
+        public int SecondScore { get; set; }
+        public int ThirdScore { get; set; }
+        public int BonusScore { get; set; }
+        public int TotalScore => FirstScore + SecondScore + ThirdScore + BonusScore;
+        public bool IsSpare => FirstScore + SecondScore == 10 && FirstScore != 10;
+        public bool IsStrike => FirstScore == 10;
     }
 }

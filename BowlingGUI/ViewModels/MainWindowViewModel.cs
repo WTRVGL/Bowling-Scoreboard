@@ -1,8 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Windows;
 using System.Windows.Input;
 using Bowling.Domain.Models;
+using Bowling.GUI.Views;
 using Bowling.Puntentelling.Services;
 using Prism.Commands;
 
@@ -98,9 +103,42 @@ namespace Bowling.GUI.ViewModels
             //Sets current frame to FramePlayed = true and next frame to IsActive = true
             Frames[currentIndex].FramePlayed = true;
 
-            // Returns if last frame. 
+            // When this was the last frame, write the score away in a CSV file.
             // Prevents IndexOutBound when trying to set the next frame to active.
-            if (currentIndex == 9) return;
+            if (currentIndex == 9)
+            {
+                // Appends the score of the current game to Score.txt found in the bin folder of the solution.
+                using var writer = new StreamWriter("Score.txt",true);
+                foreach (var fr in Frames)
+                {
+                    writer.Write($"{fr.FirstScore},{fr.SecondScore},");
+                    if (fr.IsFinalFrame)
+                    {
+                        writer.Write(fr.ThirdScore);
+                        writer.WriteLine();
+                    }
+                }
+
+                //Displays MessageBox to play again or stop.
+                var result = MessageBox.Show($"Spel afgelopen! Totale score is {Frames[9].CumulativeScore}. Opnieuw spelen?"
+                    , "Spel afgelopen.",
+                    MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
+                {
+                    var window = new MainWindow();
+                    window.Show();
+                    Application.Current.MainWindow.Close();
+                    return;
+                }
+
+                //"Hack" to close all windows, even though only one is visible.
+                foreach (Window currentWindow in Application.Current.Windows)
+                {
+                    currentWindow.Close();
+                }
+
+                return;
+            }
 
             Frames[currentIndex + 1].IsActive = true;
         }

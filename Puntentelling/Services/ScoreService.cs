@@ -25,16 +25,21 @@ namespace Bowling.Puntentelling.Services
                 // Calculate last 3 frames
                 if (i == 8)
                 {
+                    //If current frame (frame 9) is a strike
                     if (frames[i].IsStrike)
                     {
+                        //Current bonus score = sum of first score and second score of the next frame.
                         frames[i].BonusScore = frames[i + 1].FirstScore + frames[i + 1].SecondScore;
 
+                        //If last frame had 2 strikes, add 20 bonus scores to current frame.
                         if (frames[i + 1].FirstScore == 10 && frames[i + 1].SecondScore == 10)
                             frames[i].BonusScore = 20;
 
+                        //If previous frame was a strike give it bonus score of 10 + first score of last frame.
                         if (frames[i - 1].IsStrike) frames[i - 1].BonusScore = 10 + frames[i + 1].FirstScore;
                     }
 
+                    //If frame 8 is a spare give it bonus points of first score of last frame.
                     if (frames[i].IsSpare) frames[i].BonusScore = frames[i + 1].FirstScore;
 
                     return frames;
@@ -47,7 +52,7 @@ namespace Bowling.Puntentelling.Services
 
                 if (frames[i].IsStrike && frames[i + 1].IsStrike)
                 {
-                    if (frames[i + 2].IsFinalFrame) frames[i].BonusScore = 10 + frames[i + 2].FirstScore;
+                    if (frames[i + 2].FrameNumber == 10) frames[i].BonusScore = 10 + frames[i + 2].FirstScore;
 
                     frames[i].BonusScore = 10 + frames[i + 2].FirstScore;
                 }

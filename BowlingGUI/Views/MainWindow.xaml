@@ -44,7 +44,7 @@
         </Grid.RowDefinitions>
         <!--#endregion-->
 
-        
+
         <!--Border of the Frame collection-->
         <Border
             VerticalAlignment="Center"
@@ -69,7 +69,7 @@
                     ItemsSource="{Binding Frames}">
 
                     <!--Each ItemTemplate will be wrapped into
-                    whatever is defined in ItemsPanel--> 
+                    whatever is defined in ItemsPanel-->
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal" />
