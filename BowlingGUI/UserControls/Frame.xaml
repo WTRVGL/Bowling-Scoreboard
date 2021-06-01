@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:val="clr-namespace:Bowling.GUI.ValidationRules"
+             xmlns:vd="clr-namespace:Bowling.GUI.ValidationRules"
              mc:Ignorable="d"
              Background="{StaticResource LightGreyColorSolidBrush}"
              MinHeight="200"
@@ -11,64 +11,70 @@
              MaxWidth="170"
              MaxHeight="200">
 
+    <!--Frame UserControl that represents one single frame.
+   
+    This UserControl is used for templating 10 frames in the MainWindowViewModel. -->
+
+
     <UserControl.Resources>
-        <ControlTemplate x:Key="ValidationTemplate">
-            <DockPanel>
-                <TextBlock Foreground="Red" FontSize="20">!</TextBlock>
-                <AdornedElementPlaceholder/>
-            </DockPanel>
-        </ControlTemplate>
 
-  
-
+        <!--TextBox Style-->
         <Style TargetType="TextBox" x:Key="TextBoxStyle">
-
             <Setter Property="MaxLength" Value="2" />
             <Setter Property="BorderThickness" Value="2" />
             <Setter Property="BorderBrush" Value="Black" />
             <Setter Property="FontSize" Value="25" />
-            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="TextAlignment" Value="Center" />
-            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="Margin" Value="4" />
             <Setter Property="Width" Value="50" />
             <Setter Property="Template">
                 <Setter.Value>
+                    <!--ControlTemplate is used to overwrite standard mouseover and hover effects.-->
                     <ControlTemplate TargetType="{x:Type TextBoxBase}">
-                        <Border 
+                        <Border
                             Name="Border"
-                            CornerRadius="2" 
+                            CornerRadius="2"
                             Padding="2"
                             Background="Transparent"
                             BorderBrush="Black"
-                            BorderThickness="3" >
-                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
+                            BorderThickness="3">
+                            <ScrollViewer Margin="0" x:Name="PART_ContentHost" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Foreground" Value="#666666"/>
+                                <Setter Property="Foreground" Value="#666666" />
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#666666" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding FramePlayed}" Value="true">
-                    <Setter Property="IsEnabled" Value="False"/>
-                    <Setter Property="Focusable" Value="False" />
-                </DataTrigger>
-                <DataTrigger Binding="{Binding IsActive}" Value="False">
-                    <Setter Property="Focusable" Value="False" />
-                </DataTrigger>
-                
+                <!--Trigger whenever the TextBox contains a validation error-->
+                <Trigger Property="Validation.HasError" Value="True">
+                    <!--Sets a tooltip with the content of the error.-->
+                    <Setter Property="ToolTip"
+                            Value="{Binding Path=(Validation.Errors)[0].ErrorContent ,RelativeSource={RelativeSource Self}}" />
+                </Trigger>
 
+                <!--DataTrigger  disabling the TextBox whenever the frame has been played.-->
+                <DataTrigger Binding="{Binding FramePlayed}" Value="true">
+                    <Setter Property="IsEnabled" Value="False" />
+                    <Setter Property="Focusable" Value="False" />
+                </DataTrigger>
 
             </Style.Triggers>
 
         </Style>
+
+        <!--Grid Style-->
+        <!--Serves as the foreground of the entire frame-->
         <Style TargetType="Grid">
             <Style.Triggers>
+                <!--Makes the grid lighter when the current frame is not active-->
                 <DataTrigger Binding="{Binding IsActive}" Value="false">
                     <Setter Property="IsEnabled" Value="False" />
                     <Setter Property="Background" Value="Gray" />
@@ -80,6 +86,10 @@
     </UserControl.Resources>
 
     <!--#region Frame-->
+
+    <!--Main grid definitions. 
+    Frame is split up in 2 equal columns and 3 equal rows-->
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -87,7 +97,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.5*" />
-            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0.5*" />
             <RowDefinition Height="0.5*" />
         </Grid.RowDefinitions>
 
@@ -98,12 +108,11 @@
             Grid.Row="0"
             Grid.RowSpan="3"
             Grid.Column="0"
-            Grid.ColumnSpan="3">
-        </Border>
+            Grid.ColumnSpan="3" />
 
         <!--Frame Number-->
         <TextBlock
-
+            d:Text="1"
             Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0"
             Name="FirstScoreTextBlock"
             Text="{Binding FrameNumber}"
@@ -111,12 +120,11 @@
             FontWeight="Bold"
             Foreground="Black"
             HorizontalAlignment="Center"
-            VerticalAlignment="Center">
-        </TextBlock>
+            VerticalAlignment="Center" />
 
 
         <!--#region Frame Input-->
-        <!--Main Grid-->
+        <!--Text input grid-->
         <Grid
             Grid.Column="0"
             Grid.ColumnSpan="2"
@@ -124,6 +132,9 @@
             VerticalAlignment="Center"
             HorizontalAlignment="Center">
 
+            <!--3 Columns.
+            Third Column is colapsed depending on the value of IsFinalFrame
+            Only the last frame will possible contain an extra TextBox.-->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -133,14 +144,12 @@
                     <ColumnDefinition.Style>
                         <Style TargetType="ColumnDefinition">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsFinalFrame}" Value="false">
-                                    <Setter Property="Width" Value="0" />
-                                    <Setter Property="Focusable" Value="False" />
-                                </DataTrigger>
+                                <!--Data Trigger but with multiple properties-->
                                 <MultiDataTrigger>
+                                    <!--Makes the final column invisible if there is no extra roll-->
                                     <MultiDataTrigger.Conditions>
                                         <Condition Binding="{Binding IsFinalFrame}" Value="true" />
-                                        <Condition Binding="{Binding ExtraRoll}" Value="false"/>
+                                        <Condition Binding="{Binding ExtraRoll}" Value="false" />
                                     </MultiDataTrigger.Conditions>
                                     <Setter Property="Width" Value="0" />
                                     <Setter Property="Focusable" Value="False" />
@@ -152,95 +161,131 @@
                 </ColumnDefinition>
             </Grid.ColumnDefinitions>
 
+            <!--Single Row-->
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <!--First Score Input Textbox-->
-    
-                <TextBox
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    d:Text="1"
-                    Style="{StaticResource TextBoxStyle}"
-                    x:Name="FirstValue"
-                    Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
-                    <TextBox.Text>
-                        <Binding 
-                            Path="FirstScore"
-                            UpdateSourceTrigger="PropertyChanged">
+            <!--First Score Input TextBox-->
+            <TextBox
+                Grid.Row="0"
+                Grid.Column="0"
+                d:Text="1"
+                Style="{StaticResource TextBoxStyle}"
+                x:Name="FirstScore">
+                <TextBox.Text>
+                    <!--Text property is bound to the FirstScore property of the FrameViewModel
+                    .UpdateSourceTrigger causes immediate raise of PropetyChanged if the value has changed.
+                    Default behaviour is when focus is lost.
+                    ValidatesOnDataErrors causes the IDataErrorInfo validation rules to take effect.-->
+                    <Binding
+                        Path="FirstScore"
+                        UpdateSourceTrigger="PropertyChanged" 
+                        ValidatesOnDataErrors="True">
 
-                            <Binding.ValidationRules>
-                                <val:ScoreRule/>
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
- 
+                        <!--Binding Validation rules are set here.
+                        ScoreNumericValidationRule are the rules being used of each TextBox.
+                        It implements the ValidationRule abstract class and allows for aditional validation
+                        (numeric or not).-->
+                        <Binding.ValidationRules>
+                            <vd:ScoreNumericValidationRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
 
-            <!--Second Score Input Textbox-->
-            
-                <TextBox
-                    d:Text="1"
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Style="{StaticResource TextBoxStyle}"
-                    Text="{Binding SecondScore, UpdateSourceTrigger=PropertyChanged}" />
-            
+            <!--Second Score Input TextBox
+            Same as First Score-->
+            <TextBox
+                d:Text="1"
+                Grid.Row="0"
+                Grid.Column="1"
+                x:Name="SecondScore"
+                Style="{StaticResource TextBoxStyle}">
+                <TextBox.Text>
+                    <Binding 
+                        Path="SecondScore" 
+                        UpdateSourceTrigger="PropertyChanged" 
+                        ValidatesOnDataErrors="True">
+                        <Binding.ValidationRules>
+                            <vd:ScoreNumericValidationRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
 
-            <!--Third Score Input Textbox-->
-            
+
+            <!--Third Score Input Textbox
+            Binding and validation same as before-->
             <TextBox
                 Grid.Row="0"
                 Grid.Column="2"
                 d:Text="5"
-                d:Visibility ="Visible"
-                Text="{Binding ThirdScore}">
+                x:Name="ThirdScore"
+                d:Visibility="Visible">
+                <TextBox.Text>
+                    <Binding 
+                        Path="ThirdScore" 
+                        UpdateSourceTrigger="PropertyChanged" 
+                        ValidatesOnDataErrors="True">
+                        <Binding.ValidationRules>
+                            <vd:ScoreNumericValidationRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
                 <TextBox.Style>
+
+                    <!--Custom style for third score TextBox
+                    Default style is set to make the TextBox collapsed and disabled.-->
                     <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxStyle}">
-                        <Setter Property="Visibility" Value="Collapsed"/>
-                        <Setter Property="IsEnabled" Value="False"/>
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Setter Property="IsEnabled" Value="False" />
                         <Style.Triggers>
                             <MultiDataTrigger>
+                                <!--MultiDataTrigger to make the TextBox visible in case this frame is the final frame
+                                and an extra roll is allowed.-->
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsFinalFrame}" Value="true"/>
-                                    <Condition Binding="{Binding ExtraRoll}" Value="true"/>
+                                    <Condition Binding="{Binding IsFinalFrame}" Value="true" />
+                                    <Condition Binding="{Binding ExtraRoll}" Value="true" />
                                 </MultiDataTrigger.Conditions>
                                 <Setter Property="Visibility" Value="Visible" />
-                                <Setter Property="IsEnabled" Value="True"/>
+                                <Setter Property="IsEnabled" Value="True" />
                             </MultiDataTrigger>
+                            <!--If this frame has already been played, the third textbox will be disabled.                            
+                            Causes ugly third TextBox of the last frame to be visible if not implemented.-->
                             <DataTrigger Binding="{Binding FramePlayed}" Value="True">
-                                <Setter Property="IsEnabled" Value="False"/>
+                                <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </TextBox.Style>
             </TextBox>
-            
-        
 
-            
         </Grid>
 
         <!--Add Frame Button-->
-        <!--Command bound to "AddFrame" ICommand
-                    of MainWindowViewModel DataContext.      
-                -->
-        <Viewbox 
+        <Viewbox
             Grid.Column="0"
-            Grid.ColumnSpan="2" 
+            Grid.ColumnSpan="2"
             Grid.Row="2">
-            <Button
+
+            <!--"Command" is bound to the ICommand on the MainWindowViewModel.
+            The command causes the scores of every frame to update and show the next frame-->
+                <Button
                 FontFamily="{StaticResource BalloonsFont}"
                 x:Name="Submit"
                 Margin="5"
                 Content="Roll"
                 FontSize="10"
+                
                 Command="{Binding DataContext.AddFrame, RelativeSource={RelativeSource AncestorType=Window}}"
                 CommandParameter="{Binding}">
 
                 <Button.Style>
+                    
                     <Style TargetType="Button">
+                        <!--Button is disabled at default-->
+                        <Setter Property="IsEnabled" Value="False" />
                         <Setter Property="Background" Value="{StaticResource LightColorSolidBrush}" />
                         <Style.Resources>
                             <Style TargetType="Border">
@@ -248,28 +293,42 @@
                             </Style>
                         </Style.Resources>
                         <Style.Triggers>
+                            <!--If current frame is not active, button will be hidden (future frames)-->
                             <DataTrigger Binding="{Binding IsActive}" Value="false">
-                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Setter Property="Visibility" Value="Collapsed" />
                             </DataTrigger>
+                            <!--If current frame is not active, button will be hidden (past frames)-->
                             <DataTrigger Binding="{Binding FramePlayed}" Value="true">
                                 <Setter Property="Visibility" Value="Collapsed" />
                             </DataTrigger>
                             <Trigger Property="IsFocused" Value="True">
-                                <Setter Property="BorderThickness"  Value="4"/>
-                                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                <Setter Property="BorderThickness" Value="4" />
+                                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
                             </Trigger>
+                            <MultiDataTrigger>
+                                <!--If any of the TextBoxes have validation errors, the button will be disabled.-->
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=FirstScore, Path=(Validation.HasError)}"
+                                               Value="false" />
+                                    <Condition Binding="{Binding ElementName=SecondScore, Path=(Validation.HasError)}"
+                                               Value="false" />
+                                    <Condition Binding="{Binding ElementName=ThirdColumn, Path=(Validation.HasError)}"
+                                               Value="false" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="True" />
+                            </MultiDataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Button.Style>
             </Button>
 
         </Viewbox>
-        
+
         <!--Cumulative Score-->
         <TextBlock
-            
+
             Foreground="{StaticResource LightColorSolidBrush}"
-            d:Text ="1"
+            d:Text="1"
             Text="{Binding CumulativeScore}"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
@@ -281,6 +340,7 @@
                 <Style TargetType="TextBlock">
                     <Setter Property="Visibility" Value="Visible" />
                     <Style.Triggers>
+                        <!--Only show total cumulative scores of frames that have been played.-->
                         <DataTrigger Binding="{Binding FramePlayed}" Value="false">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>

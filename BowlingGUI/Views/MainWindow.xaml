@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:Bowling.GUI.ViewModels"
-        xmlns:userControls="clr-namespace:Bowling.GUI.UserControls"
+        xmlns:uc="clr-namespace:Bowling.GUI.UserControls"
         mc:Ignorable="d"
         Focusable="False"
         Title="Bowling: a score simulator"
@@ -15,11 +15,16 @@
         Background="{StaticResource GreyColorSolidBrush}">
 
 
+    <!--Main Window View--><!--
+    Simple "container" that contains an 
+    ItemControl bound to the ObservableCollection of FrameViewModel-->
+
     <!--#region Window Styles-->
     <Window.Resources>
         <vm:MockViewModel x:Key="MockViewModel" />
     </Window.Resources>
 
+    <!--Sets the Window DataContext to an instance of MainWindowViewModel-->
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
@@ -40,7 +45,7 @@
         <!--#endregion-->
 
         
-
+        <!--Border of the Frame collection-->
         <Border
             VerticalAlignment="Center"
             HorizontalAlignment="Center"
@@ -51,10 +56,11 @@
             <!---->
             <Grid>
 
-                <!--ItemControl bound to Frames Observable Collection-->
-                <!--Data Template is a <Frame> UC.-->
-                <!--d:DataContext is for design mock frames-->
-                <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                <!--ItemControl bound to Frames ObservableCollection
+                Data Template is a <Frame> UC.
+                This will result into 10 Frame UserControls to be placed inside this grid.
+                d:DataContext is for design mock frames-->
+
                 <ItemsControl
                     Focusable="False"
                     IsTabStop="False"
@@ -62,18 +68,23 @@
                     d:ItemsSource="{Binding DesignTimeMockList}"
                     ItemsSource="{Binding Frames}">
 
+                    <!--Each ItemTemplate will be wrapped into
+                    whatever is defined in ItemsPanel--> 
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
+
+                    <!--Template of what will be generated for each
+                    item in the ItemsControl ItemsSource bound property.-->
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Grid Margin="5">
-                                <!--<Border BorderBrush="Black"
-                                        BorderThickness="2" />-->
 
-                                <userControls:Frame
+                            <!--A Grid-->
+                            <Grid Margin="5">
+                                <!--A Frame-->
+                                <uc:Frame
                                     DataContext="{Binding}" />
                             </Grid>
                         </DataTemplate>

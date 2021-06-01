@@ -3,10 +3,20 @@ using Bowling.Domain.Models;
 
 namespace Bowling.Puntentelling.Services
 {
+
+    /// <summary>
+    /// Class that contains methods to calculate scores for a list of Frames.
+    /// </summary>
     public class ScoreService
     {
-        //Calculates BonusScore for each frame depending on the next 2 frames
-
+        /// <summary>
+        /// Returns a List of Frame with the updated scores.
+        /// <remarks>
+        /// For every Frame in the list, bonus points will the calculated depending on strikes, spares,...
+        /// </remarks>
+        /// </summary>
+        /// <param name="frames">The frames.</param>
+        /// <returns></returns>
         public List<Frame> UpdatedFrameScores(List<Frame> frames)
         {
             // Loops trough the entire list
@@ -51,6 +61,10 @@ namespace Bowling.Puntentelling.Services
             return frames;
         }
 
+        /// <summary>
+        /// Returns the Total score of all the Frames.
+        /// </summary>
+        /// <param name="frames">The frames.</param>
         public int TotalFrameScore(List<Frame> frames)
         {
             var totalScore = 0;

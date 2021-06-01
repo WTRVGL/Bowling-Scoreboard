@@ -22,7 +22,7 @@ namespace Bowling.GUI.UserControls
 
         private void Frame_Loaded(object sender, RoutedEventArgs e)
         {
-            FirstValue.Focus();
+            FirstScore.Focus();
         }
     }
 }

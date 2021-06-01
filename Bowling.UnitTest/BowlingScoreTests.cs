@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using Bowling.Domain.Models;
 using Bowling.Puntentelling.Services;
 
+
 namespace Bowling.UnitTest
 {
+
+    /// <summary>
+    /// Unit Test class to test the functionality of the ScoreService
+    /// </summary>
     [TestClass]
     public class BowlingScoreTests
     {
